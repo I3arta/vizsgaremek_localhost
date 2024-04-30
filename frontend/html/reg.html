@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AceWarfare | Regisztráció</title>
+    <link rel="icon" href="/images/icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="body">
+    <div class="wrapper">
+        <form id="registerForm" action="">
+            <h1>Regisztráció</h1>
+                <div class="input-box">
+                    <input for="registerEmail" type="email" class="form-control" id="registerEmail" placeholder="Email Cím" required>
+                </div>
+                <div class="input-box">
+                    <input for="registerUsername" type="text" class="form-control" id="registerUsername" placeholder="Felhasználónév" required>
+                </div>
+                <div class="input-box">
+                    <input for="registerPassword" type="password" class="form-control" id="registerPassword" placeholder="Jelszó min 8 karakter" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required> </div>
+                <div class="input-box">
+                    <input for="registerPassword2" type="password" class="form-control" id="registerPassword2" placeholder="Jelszó újra" required>
+                </div>
+                <button type="submit" class="kar">Regisztráció</button>
+                <button type="button" onclick="forLogin()" class="kar">Bejelentkezés</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="register.js"></script>
+</body>
+
+</html>

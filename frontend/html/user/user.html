@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AceWarfare | Kezdőlap</title>
+    <link rel="icon" href="/images/icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="bootstrap.bundle.min.js"></script>
+</head>
+
+<body onload="getUserEmail()" style="background-image: url(/images/wback.jpg); background-size: cover;">
+    <div id="userID">
+        <!-- menu  -->
+        <nav class="navbar navbar-expand-sm bg-dark rounded">
+            <div class="container-fluid">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" id="profile">
+                            <i class="fa-regular fa-user btn btn-outline-light"></i>
+                        </a>
+                    </li>
+                    <button class="btn btn-outline-light float-end me-2" onclick="fetchSeries()">Kezdőlap</button>
+                    
+                </ul>
+                <form class="d-flex" role="search" id="searchingForm">
+                    <input class="form-control me-2" type="search" placeholder="Keresés" aria-label="Search"
+                        name="searching">
+                    <button class="btn btn-outline-light me-2" type="submit"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+
+                <button id="logout" onclick="logout()" class="btn btn-outline-light float-end"><i
+                        class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </nav>
+
+        <div id="series-list" class="row">
+
+        </div>
+    </div>
+
+    <!-- profil kép szerkesztésének offcanvas (oldalról beugró) menüje -->
+    <div class="offcanvas offcanvas-start bg-dark text-white rounded" id="editProfile" style="max-width: 380px;">
+        <div class="offcanvas-header mx-auto">
+            <h1 class="offcanvas-title">Profil adatok</h1>
+        </div>
+        <div class="offcanvas-body row mx-auto" id="offcanvasBody">
+
+        </div>
+    </div>
+
+    <!-- profil kép szerkesztésének modal ablaka -->
+    <div class="modal fade" id="editProfileImageModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Profilkép szerkesztése</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileImage">
+                        <div class="form-group">
+                            <label for="editImage">Kép</label>
+                            <input type="file" class="form-control" id="editImage" name="editImage">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="editImage()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- username szerkesztésének modal ablaka -->
+    <div class="modal fade" id="editProfileUsernameModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Felhasználónév szerkesztése</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileUsername">
+                        <div class="form-group">
+                            <label for="editUsername">Felhasználónév</label>
+                            <input type="text" class="form-control" id="editUsername" name="editUsername">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="editUsername()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- születési dátum szerkesztésének modal ablaka -->
+    <div class="modal fade" id="editProfileBirthdayModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Születési dátum szerkesztése</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileBirthday">
+                        <div class="form-group">
+                            <label for="editBirthday">Születési dátum</label>
+                            <input type="date" class="form-control" id="editBirthday" name="editBirthday">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="editBirthday()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jelszó módosításának modal ablaka -->
+    <div class="modal fade" id="editProfilePasswordModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Jelszó módosítása</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfilePassword">
+                        <div class="form-group">
+                            <label for="editPassword" class="form-label">Jelszó</label>
+                            <input type="password" class="form-control" id="editPassword" placeholder="Jelszó"
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+
+                            <label for="editPassword2" class="form-label">Jelszó újra</label>
+                            <input type="password" class="form-control" id="editPassword2" placeholder="Jelszó újra">
+                        </div>
+
+                        <div id="message" class="mt-5">
+                            <h3>A jelszónak a következőket kell tartalmaznia:</h3>
+                            <p id="letter" class="invalid">Egy <b>kisbetű</b></p>
+                            <p id="capital" class="invalid">Egy <b>nagybetű</b></p>
+                            <p id="number" class="invalid">Egy <b>szám</b></p>
+                            <p id="length" class="invalid">Minimum <b>8 karakter</b></p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="editPassword()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- a kosár gomb modal ablaka -->
+    <div class="modal fade" id="cartModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Kosár</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="buyingForm">
+                        <div class="form-group">
+                            <label for="stock">Darabszám</label>
+                            <input type="text" class="form-control" id="stock" name="stock">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="ordering()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- a fizetés modal ablaka -->
+    <div class="modal fade" id="paymentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Fizetés</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 id="amount"></h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="payment()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="logout.js"></script>
+    <script src="user.js"></script>
+</body>
+
+</html>
